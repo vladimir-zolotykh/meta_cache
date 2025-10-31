@@ -1,6 +1,17 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 # PYTHON_ARGCOMPLETE_OK
+"""
+>>> f = Spam("foo")
+Creating Spam(foo) ...
+>>> g = Spam("bar")
+Creating Spam(bar) ...
+>>> h = Spam("foo")
+>>> f is g
+False
+>>> f is h
+True
+"""
 
 
 class Singleton(type):
@@ -19,8 +30,6 @@ class Spam(metaclass=Singleton):
 
 
 if __name__ == "__main__":
-    f = Spam("foo")
-    g = Spam("bar")
-    h = Spam("foo")
-    print("f is g: ", f is g)
-    print("f is h: ", f is h)
+    import doctest
+
+    doctest.testmod()
