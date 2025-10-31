@@ -7,12 +7,9 @@ class Singleton(type):
     _instances = {}
 
     def __call__(self, *args, **kwars):
-        if args in self._instances:
-            inst = self._instances[args]
-        else:
-            inst = super().__call__(*args, **kwars)
-            self._instances[args] = inst
-        return inst
+        if args not in self._instances:
+            self._instances[args] = super().__call__(*args, **kwars)
+        return self._instances[args]
 
 
 class Spam(metaclass=Singleton):
