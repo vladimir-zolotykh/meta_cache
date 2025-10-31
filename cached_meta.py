@@ -4,14 +4,13 @@
 """
 Cache instances of classes
 """
+from collections import defaultdict
 
 
 class Cached(type):
-    _cache = {}
+    _cache = defaultdict(dict)
 
     def __call__(cls, *args, **kwargs):
-        if cls not in cls._cache:
-            cls._cache[cls] = {}
         if args not in cls._cache[cls]:
             cls._cache[cls][args] = super().__call__(*args, **kwargs)
         return cls._cache[cls][args]
