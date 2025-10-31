@@ -16,9 +16,9 @@ class Singleton(type):
     _instance = {}
 
     def __call__(cls, *args, **kwars):
-        if cls not in Singleton._instance:
-            Singleton._instance[cls] = super().__call__(*args, **kwars)
-        return Singleton._instance[cls]
+        if cls not in cls._instance:
+            cls._instance[cls] = super().__call__(*args, **kwars)
+        return cls._instance[cls]
 
 
 class Spam(metaclass=Singleton):
