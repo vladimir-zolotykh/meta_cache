@@ -2,31 +2,33 @@
 # -*- coding: utf-8 -*-
 # PYTHON_ARGCOMPLETE_OK
 """
->>> f = Spam("foo")
-Creating Spam(foo) ...
->>> g = Spam("bar")
-Creating Spam(bar) ...
->>> h = Spam("foo")
->>> f is g
-False
->>> f is h
+>>> s = Spam()
+Creating Spam() ...
+>>> f = Foo()
+Creating Foo() ...
+>>> s2 = Spam()
+>>> s2 is s
 True
 """
 
 
 class Singleton(type):
-    _instances = {}
+    _instance = {}
 
-    def __call__(self, *args, **kwars):
-        if args not in self._instances:
-            self._instances[args] = super().__call__(*args, **kwars)
-        return self._instances[args]
+    def __call__(cls, *args, **kwars):
+        if cls not in Singleton._instance:
+            Singleton._instance[cls] = super().__call__(*args, **kwars)
+        return Singleton._instance[cls]
 
 
 class Spam(metaclass=Singleton):
-    def __init__(self, name):
-        print("Creating Spam({:s}) ...".format(name))
-        self.name = name
+    def __init__(self):
+        print("Creating Spam() ...")
+
+
+class Foo(metaclass=Singleton):
+    def __init__(self):
+        print("Creating Foo() ...")
 
 
 if __name__ == "__main__":
