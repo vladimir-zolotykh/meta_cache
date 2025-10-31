@@ -18,7 +18,7 @@ class Singleton(type):
 class Spam(metaclass=Singleton):
     def __init__(self, name):
         print("Creating Spam({:s}) ...".format(name))
-        self.name == name
+        self.name = name
 
 
 if __name__ == "__main__":
