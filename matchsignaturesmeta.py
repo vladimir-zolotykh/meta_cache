@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 # PYTHON_ARGCOMPLETE_OK
-from inspect import signature, Parameter
+from inspect import signature, Parameter, Signature
 import logging
 
 logging.basicConfig(level=logging.INFO)
 
 
-def signatures_equal(sig1, sig2):
+def signatures_equal(sig1: Signature, sig2: Signature) -> bool:
     params1 = list(sig1.parameters.values())
     params2 = list(sig2.parameters.values())
 
@@ -15,14 +15,10 @@ def signatures_equal(sig1, sig2):
         return False
 
     for p1, p2 in zip(params1, params2):
-        # Compare only kind and default, not name
-        if p1.kind != p2.kind or (
-            p1.default != p2.default
-            and not (p1.default is Parameter.empty and p2.default is Parameter.empty)
-        ):
-            return False
-    if sig1.return_annotation != sig2.return_annotation:
-        if not (sig1.return_annotation is sig2.return_annotation is Parameter.empty):
+        temp_name = "temp"
+        p1_normalized = p1.replace(name=temp_name)
+        p2_normalized = p2.replace(name=temp_name)
+        if p1_normalized != p2_normalized:
             return False
     return True
 
