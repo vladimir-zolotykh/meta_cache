@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 # PYTHON_ARGCOMPLETE_OK
-from inspect import signature, Parameter, Signature
+from inspect import signature, Signature
 import logging
 
 logging.basicConfig(level=logging.INFO)
