@@ -4,16 +4,21 @@
 """
 Cache instances of classes
 """
-from collections import defaultdict
+import weakref
+
+# from collections import defaultdict
 
 
 class Cached(type):
-    _cache = defaultdict(dict)
+    def __init__(cls, clsname, basis, clsdict):
+        super().__init__(clsname, basis, clsdict)
+        cls._cache = weakref.WeakValueDictionary()
 
     def __call__(cls, *args, **kwargs):
-        if args not in cls._cache[cls]:
-            cls._cache[cls][args] = super().__call__(*args, **kwargs)
-        return cls._cache[cls][args]
+        if args not in cls._cache:
+            instance = super().__call__(*args, **kwargs)
+            cls._cache[args] = instance
+        return cls._cache[args]
 
 
 class Person(metaclass=Cached):
