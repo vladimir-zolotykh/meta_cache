@@ -43,7 +43,10 @@ class MatchSignaturesMeta(type):
                 continue
             if not signatures_equal(sig, sig_prev):
                 logging.warning(
-                    "Signature mismatch for %r. %s != %s", meth.__name__, sig, sig_prev
+                    "Signature mismatch for %r. %s != %s",
+                    meth.__qualname__,
+                    sig,
+                    sig_prev,
                 )
 
 
