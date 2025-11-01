@@ -15,10 +15,11 @@ class Cached(type):
         cls._cache = weakref.WeakValueDictionary()
 
     def __call__(cls, *args, **kwargs):
+        key = (args, frozenset(kwargs.items()))
         if args not in cls._cache:
             instance = super().__call__(*args, **kwargs)
-            cls._cache[args] = instance
-        return cls._cache[args]
+            cls._cache[key] = instance
+        return cls._cache[key]
 
 
 class Person(metaclass=Cached):
